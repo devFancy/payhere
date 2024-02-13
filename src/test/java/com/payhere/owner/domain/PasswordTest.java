@@ -2,10 +2,13 @@ package com.payhere.owner.domain;
 
 import com.payhere.auth.domain.HashingFactory;
 import com.payhere.auth.domain.HashingI;
+import com.payhere.owner.exception.InvalidPasswordFormatException;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
+
+import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 
 class PasswordTest {
 
@@ -18,6 +21,18 @@ class PasswordTest {
         HashingI hashing = new HashingFactory().getHashing();
 
         // when & then
-        Assertions.assertThatThrownBy(() -> Password.of(hashing, invalidPassword));
+        Assertions.assertThatThrownBy(() -> Password.of(hashing, invalidPassword))
+                .isInstanceOf(InvalidPasswordFormatException.class);
     }
+
+    @DisplayName("사장님의 비밀번호는 영어 대소문자, 숫자, 특수문자(@$!%*#?&) 세 카테고리를 모두 포함하는 8자이상 20자 이하의 문자열에 해당한다.")
+    @ParameterizedTest
+    @ValueSource(strings = {"Qwer1234!!", "agq239012@$", "gsdfj1932*#?&"})
+    void owner_password_success_format(final String answer) {
+        // given
+        HashingI hashing = new HashingFactory().getHashing();
+
+        // when & then
+        assertDoesNotThrow(() -> Password.of(hashing, answer));
+     }
 }
