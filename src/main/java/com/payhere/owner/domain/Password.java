@@ -1,5 +1,6 @@
 package com.payhere.owner.domain;
 
+import com.payhere.auth.domain.HashingI;
 import com.payhere.owner.exception.InvalidCellPhoneNumberException;
 import com.payhere.owner.exception.InvalidPasswordFormatException;
 
@@ -23,6 +24,10 @@ public class Password {
         this.value = value;
     }
 
+    public static Password of(final HashingI hashing, final String password) {
+        validate(password);
+        return new Password(hashing.generateSHA256Hash(password));
+    }
 
     private static void validate(final String value) {
         if (value == null || value.isBlank()) {
