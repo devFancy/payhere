@@ -3,6 +3,7 @@ package com.payhere.owner.domain.entity;
 
 import com.payhere.owner.domain.CellPhoneNumber;
 import com.payhere.owner.domain.Password;
+import lombok.Builder;
 
 import javax.persistence.*;
 
@@ -26,6 +27,7 @@ public class Owner {
     protected Owner() {
     }
 
+    @Builder
     public Owner(final CellPhoneNumber cellPhoneNumber, final Password password) {
         this.cellPhoneNumber = cellPhoneNumber;
         this.password = password;
