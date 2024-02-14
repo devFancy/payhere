@@ -50,8 +50,8 @@ public class Product {
 
     @Builder
     public Product(final Owner owner, final ProductCategory productCategory, final int price, final int cost
-                , final String name, final String description, final String barcode
-                , final LocalDateTime expirationDate, final ProductSize productSize) {
+            , final String name, final String description, final String barcode
+            , final LocalDateTime expirationDate, final ProductSize productSize) {
         this.owner = owner;
         this.productCategory = productCategory;
         this.price = price;

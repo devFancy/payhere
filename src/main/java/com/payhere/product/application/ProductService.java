@@ -35,7 +35,7 @@ public class ProductService {
     }
 
     private void validateOwner(final Long ownerId) {
-        if(!ownerRepository.existsById(ownerId)) {
+        if (!ownerRepository.existsById(ownerId)) {
             throw new NotFoundOwnerException("존재하지 않는 사장님 입니다.");
         }
     }

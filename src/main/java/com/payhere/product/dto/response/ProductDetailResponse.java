@@ -25,7 +25,6 @@ public class ProductDetailResponse {
     private ProductSize productSize;
 
 
-
     @Builder
     public ProductDetailResponse(final Long id, final ProductCategory productCategory, final int price, final int cost,
                                  final String name, final String description, final String barcode,

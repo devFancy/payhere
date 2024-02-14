@@ -8,6 +8,7 @@ import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+
 import java.time.LocalDateTime;
 
 @Getter
@@ -37,7 +38,7 @@ public class ProductCreateServiceRequest {
         this.productSize = productSize;
     }
 
-    public Product toEntity(final Owner owner , final ProductCreateServiceRequest request) {
+    public Product toEntity(final Owner owner, final ProductCreateServiceRequest request) {
         return Product.builder()
                 .owner(owner)
                 .productCategory(request.productCategory)
