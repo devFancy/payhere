@@ -5,14 +5,11 @@ import com.payhere.auth.presentation.AuthenticationPrincipal;
 import com.payhere.global.ApiResponse;
 import com.payhere.product.application.ProductService;
 import com.payhere.product.dto.request.ProductCreateRequest;
+import com.payhere.product.dto.request.ProductUpdateRequest;
 import com.payhere.product.dto.response.ProductDetailResponse;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
-import java.net.URI;
 
 @RestController
 @RequestMapping("/products")
@@ -28,5 +25,20 @@ public class ProductController {
     public ApiResponse<ProductDetailResponse> saveProduct(@AuthenticationPrincipal final LoginOwner loginOwner,
                                                           @Valid @RequestBody final ProductCreateRequest request) {
         return ApiResponse.ok(productService.createProduct(loginOwner.getId(), request.toServiceRequest()));
+    }
+
+    @PatchMapping("/{productId}")
+    public ApiResponse<ProductDetailResponse> updateProduct(@AuthenticationPrincipal final LoginOwner loginOwner,
+                                                            @Valid @PathVariable final Long productId,
+                                                            @RequestBody final ProductUpdateRequest request) {
+        productService.updateProduct(loginOwner, productId, request.toServiceRequest());
+        return ApiResponse.noContent();
+    }
+
+    @DeleteMapping("/{productId}")
+    public ApiResponse<Void> deleteProduct(@AuthenticationPrincipal final LoginOwner loginOwner,
+                                           @Valid @PathVariable final Long productId) {
+        productService.deleteProduct(loginOwner, productId);
+        return ApiResponse.noContent();
     }
 }

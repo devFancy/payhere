@@ -63,6 +63,27 @@ public class Product {
         this.productSize = productSize;
     }
 
+    public void change(final Owner owner, final ProductCategory productCategory, final int price, final int cost,
+                       final String name, final String description, final String barcode,
+                       final LocalDateTime expirationDate, final ProductSize productSize) {
+        this.owner = owner;
+        this.productCategory = productCategory;
+        this.price = price;
+        this.cost = cost;
+        this.name = name;
+        this.description = description;
+        this.barcode = barcode;
+        this.expirationDate = expirationDate;
+        this.productSize = productSize;
+    }
+
+    public boolean isOwner(final Long accessOwnerId) {
+        if (accessOwnerId == null) {
+            return false;
+        }
+        return owner.getId().equals(accessOwnerId);
+    }
+
     public Long getId() {
         return id;
     }
@@ -98,6 +119,7 @@ public class Product {
     public LocalDateTime getExpirationDate() {
         return expirationDate;
     }
+
 
     public ProductSize getProductSize() {
         return productSize;
