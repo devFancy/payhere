@@ -6,23 +6,19 @@ import org.springframework.http.HttpStatus;
 @Getter
 public class ApiResponse<T> {
 
-    private int code;
-    private HttpStatus status;
-    private String message;
-    private T data;
+    private final Meta meta;
+    private final T data;
 
-    public ApiResponse (HttpStatus status, String message, T data) {
-        this.code = status.value();
-        this.status = status;
-        this.message = message;
+    private ApiResponse(int code, String message, T data) {
+        this.meta = new Meta(code, message);
         this.data = data;
     }
 
     public static <T> ApiResponse<T> of(HttpStatus httpStatus, String message, T data) {
-        return new ApiResponse<>(httpStatus, message, data);
+        return new ApiResponse<>(httpStatus.value(), message, data);
     }
     public static <T> ApiResponse<T> of(HttpStatus httpStatus, T data) {
-        return of(httpStatus, httpStatus.name(), data);
+        return of(httpStatus, httpStatus.getReasonPhrase(), data);
     }
 
     public static <T> ApiResponse<T> ok(T data) {
@@ -34,6 +30,17 @@ public class ApiResponse<T> {
     }
 
     public static <T> ApiResponse<T> noContent() {
-        return new ApiResponse<>(HttpStatus.NO_CONTENT, HttpStatus.NO_CONTENT.getReasonPhrase(), null);
+        return of(HttpStatus.NO_CONTENT, null);
+    }
+
+    @Getter
+    private static class Meta {
+        private final int code;
+        private final String message;
+
+        private Meta(int code, String message) {
+            this.code = code;
+            this.message = message;
+        }
     }
 }
