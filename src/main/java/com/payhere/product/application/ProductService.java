@@ -51,7 +51,7 @@ public class ProductService {
         validateProductOwnership(loginOwner, product);
 
         product.change(owner, request.getProductCategory(), request.getPrice(), request.getCost(), request.getName()
-        , request.getDescription(), request.getBarcode(), request.getExpirationDate(), request.getProductSize());
+                , request.getDescription(), request.getBarcode(), request.getExpirationDate(), request.getProductSize());
     }
 
     private Product findProductObject(final Long productId) {
@@ -68,7 +68,7 @@ public class ProductService {
     }
 
     private void validateProductOwnership(final LoginOwner loginOwner, final Product product) {
-        if(!product.isOwner(loginOwner.getId())) {
+        if (!product.isOwner(loginOwner.getId())) {
             throw new AuthorizationException();
         }
     }

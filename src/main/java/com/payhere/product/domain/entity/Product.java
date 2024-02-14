@@ -111,6 +111,7 @@ public class Product {
     public String getDescription() {
         return description;
     }
+
     public String getBarcode() {
         return barcode;
     }
