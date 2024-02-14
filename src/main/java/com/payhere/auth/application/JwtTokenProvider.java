@@ -1,7 +1,7 @@
 package com.payhere.auth.application;
 
-import io.jsonwebtoken.Jwts;
-import io.jsonwebtoken.SignatureAlgorithm;
+import com.payhere.auth.exception.InvalidTokenException;
+import io.jsonwebtoken.*;
 import io.jsonwebtoken.security.Keys;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
@@ -36,5 +36,26 @@ public class JwtTokenProvider implements TokenProvider {
                 .setExpiration(validity)
                 .signWith(key, SignatureAlgorithm.HS256)
                 .compact();
+    }
+    public void validateToken(final String token) {
+        try {
+            Jws<Claims> claims = Jwts.parserBuilder()
+                    .setSigningKey(key)
+                    .build()
+                    .parseClaimsJws(token);
+            if (claims.getBody().getExpiration().before(new Date())) { // 만료 시간이 현재 시간보다 이전 시간인지 확인하는 조건문
+                throw new InvalidTokenException("토큰이 만료되었습니다.");
+            }
+        } catch (JwtException | IllegalArgumentException e) {
+            throw new InvalidTokenException("권한이 없습니다.");
+        }
+    }
+    public String getPayLoad(final String token) {
+        return Jwts.parserBuilder()
+                .setSigningKey(key)
+                .build()
+                .parseClaimsJws(token)
+                .getBody()
+                .getSubject();
     }
 }
