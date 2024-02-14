@@ -22,11 +22,12 @@ public class OwnerService {
     }
 
     @Transactional
-    public void signUp(final SignupRequest signupRequest) {
+    public Long signUp(final SignupRequest signupRequest) {
         Owner owner = Owner.builder()
                 .cellPhoneNumber(new CellPhoneNumber(signupRequest.getCellPhoneNumber()))
                 .password(Password.of(hashing, signupRequest.getPassword()))
                 .build();
         ownerRepository.save(owner);
+        return owner.getId();
     }
 }
