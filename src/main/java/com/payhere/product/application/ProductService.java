@@ -29,7 +29,7 @@ public class ProductService {
 
     @Transactional
     public ProductDetailResponse createProduct(final Long ownerId, final ProductCreateServiceRequest request) {
-        validateOwner(ownerId);
+        validateOwnerExists(ownerId);
 
         Owner foundOwner = ownerRepository.getById(ownerId);
         Product saveProduct = request.toEntity(foundOwner, request);
@@ -38,7 +38,7 @@ public class ProductService {
         return ProductDetailResponse.of(saveProduct);
     }
 
-    private void validateOwner(final Long ownerId) {
+    private void validateOwnerExists(final Long ownerId) {
         if (!ownerRepository.existsById(ownerId)) {
             throw new NotFoundOwnerException("존재하지 않는 사장님 입니다.");
         }
@@ -46,8 +46,9 @@ public class ProductService {
 
     @Transactional
     public void updateProduct(final LoginOwner loginOwner, final Long productId, final ProductUpdateServiceRequest request) {
-        Product product = findProductObject(productId);
         Owner owner = ownerRepository.getById(loginOwner.getId());
+        Product product = findProductObject(productId);
+        validateProductOwnership(loginOwner, product);
 
         product.change(owner, request.getProductCategory(), request.getPrice(), request.getCost(), request.getName()
         , request.getDescription(), request.getBarcode(), request.getExpirationDate(), request.getProductSize());
