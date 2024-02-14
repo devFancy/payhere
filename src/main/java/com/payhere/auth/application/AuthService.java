@@ -50,5 +50,7 @@ public class AuthService {
 
     public Long extractOwnerId(final String accessToken) {
         Long ownerId = tokenCreator.extractPayLoad(accessToken);
+        ownerRepository.validateExistById(ownerId);
+        return ownerId;
     }
 }
