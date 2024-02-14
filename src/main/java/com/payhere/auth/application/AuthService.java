@@ -33,4 +33,9 @@ public class AuthService {
         return new AuthInfo(owner.getId(), owner.getCellPhoneNumber());
     }
 
+    @Transactional
+    public AccessTokenResponse generateAccessToken(final AuthInfo authInfo) {
+        AuthAccessToken authAccessToken = tokenCreator.createAuthToken(authInfo.getId());
+        return new AccessTokenResponse(authAccessToken.getAccessToken());
+    }
 }
