@@ -1,6 +1,6 @@
 package com.payhere.owner.domain;
 
-import com.payhere.auth.domain.HashingI;
+import com.payhere.auth.domain.hashing.HashingI;
 import com.payhere.owner.exception.InvalidPasswordFormatException;
 
 import javax.persistence.Column;
@@ -34,5 +34,9 @@ public class Password {
         if (!PATTERN.matcher(value).matches()) {
             throw new InvalidPasswordFormatException();
         }
+    }
+
+    public String getValue() {
+        return value;
     }
 }

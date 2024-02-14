@@ -37,11 +37,11 @@ public class Owner {
         return id;
     }
 
-    public CellPhoneNumber getCellPhoneNumber() {
-        return cellPhoneNumber;
+    public String getCellPhoneNumber() {
+        return cellPhoneNumber.getValue();
     }
 
-    public Password getPassword() {
-        return password;
+    public String getPassword() {
+        return password.getValue();
     }
 }
