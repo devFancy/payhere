@@ -35,4 +35,10 @@ public class ProductController {
         return ApiResponse.noContent();
     }
 
+    @DeleteMapping("/{productId}")
+    public ApiResponse<Void> deleteProduct(@AuthenticationPrincipal final LoginOwner loginOwner,
+                                           @Valid @PathVariable final Long productId) {
+        productService.deleteProduct(loginOwner, productId);
+        return ApiResponse.noContent();
+    }
 }

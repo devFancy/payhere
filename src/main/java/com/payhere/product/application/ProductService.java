@@ -2,6 +2,7 @@ package com.payhere.product.application;
 
 
 import com.payhere.auth.dto.LoginOwner;
+import com.payhere.auth.exception.AuthorizationException;
 import com.payhere.owner.domain.OwnerRepository;
 import com.payhere.owner.domain.entity.Owner;
 import com.payhere.owner.exception.NotFoundOwnerException;
@@ -55,5 +56,19 @@ public class ProductService {
     private Product findProductObject(final Long productId) {
         return productRepository.findById(productId)
                 .orElseThrow(NotFoundProductException::new);
+    }
+
+    @Transactional
+    public void deleteProduct(final LoginOwner loginOwner, final Long productId) {
+        Product product = findProductObject(loginOwner.getId());
+        validateProductOwnership(loginOwner, product);
+
+        productRepository.deleteById(productId);
+    }
+
+    private void validateProductOwnership(final LoginOwner loginOwner, final Product product) {
+        if(!product.isOwner(loginOwner.getId())) {
+            throw new AuthorizationException();
+        }
     }
 }

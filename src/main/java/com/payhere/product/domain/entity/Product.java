@@ -77,6 +77,13 @@ public class Product {
         this.productSize = productSize;
     }
 
+    public boolean isOwner(final Long accessOwnerId) {
+        if (accessOwnerId == null) {
+            return false;
+        }
+        return owner.getId().equals(accessOwnerId);
+    }
+
     public Long getId() {
         return id;
     }
@@ -104,10 +111,10 @@ public class Product {
     public String getDescription() {
         return description;
     }
-
     public String getBarcode() {
         return barcode;
     }
+
     public LocalDateTime getExpirationDate() {
         return expirationDate;
     }
