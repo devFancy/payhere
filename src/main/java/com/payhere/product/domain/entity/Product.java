@@ -63,6 +63,20 @@ public class Product {
         this.productSize = productSize;
     }
 
+    public void change(final Owner owner, final ProductCategory productCategory, final int price, final int cost,
+                       final String name, final String description, final String barcode,
+                       final LocalDateTime expirationDate, final ProductSize productSize) {
+        this.owner = owner;
+        this.productCategory = productCategory;
+        this.price = price;
+        this.cost = cost;
+        this.name = name;
+        this.description = description;
+        this.barcode = barcode;
+        this.expirationDate = expirationDate;
+        this.productSize = productSize;
+    }
+
     public Long getId() {
         return id;
     }
@@ -94,10 +108,10 @@ public class Product {
     public String getBarcode() {
         return barcode;
     }
-
     public LocalDateTime getExpirationDate() {
         return expirationDate;
     }
+
 
     public ProductSize getProductSize() {
         return productSize;

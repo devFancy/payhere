@@ -1,13 +1,16 @@
 package com.payhere.product.application;
 
 
+import com.payhere.auth.dto.LoginOwner;
 import com.payhere.owner.domain.OwnerRepository;
 import com.payhere.owner.domain.entity.Owner;
 import com.payhere.owner.exception.NotFoundOwnerException;
 import com.payhere.product.domain.ProductRepository;
 import com.payhere.product.domain.entity.Product;
 import com.payhere.product.dto.request.ProductCreateServiceRequest;
+import com.payhere.product.dto.request.ProductUpdateServiceRequest;
 import com.payhere.product.dto.response.ProductDetailResponse;
+import com.payhere.product.exception.NotFoundProductException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -38,5 +41,19 @@ public class ProductService {
         if (!ownerRepository.existsById(ownerId)) {
             throw new NotFoundOwnerException("존재하지 않는 사장님 입니다.");
         }
+    }
+
+    @Transactional
+    public void updateProduct(final LoginOwner loginOwner, final Long productId, final ProductUpdateServiceRequest request) {
+        Product product = findProductObject(productId);
+        Owner owner = ownerRepository.getById(loginOwner.getId());
+
+        product.change(owner, request.getProductCategory(), request.getPrice(), request.getCost(), request.getName()
+        , request.getDescription(), request.getBarcode(), request.getExpirationDate(), request.getProductSize());
+    }
+
+    private Product findProductObject(final Long productId) {
+        return productRepository.findById(productId)
+                .orElseThrow(NotFoundProductException::new);
     }
 }
