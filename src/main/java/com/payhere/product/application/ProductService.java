@@ -25,6 +25,7 @@ public class ProductService {
 
     @Transactional
     public ProductDetailResponse createProduct(final Long ownerId, final ProductCreateServiceRequest request) {
+        validateOwner(ownerId);
 
         Owner foundOwner = ownerRepository.getById(ownerId);
         Product saveProduct = request.toEntity(foundOwner, request);
@@ -33,4 +34,9 @@ public class ProductService {
         return ProductDetailResponse.of(saveProduct);
     }
 
+    private void validateOwner(final Long ownerId) {
+        if(!ownerRepository.existsById(ownerId)) {
+            throw new NotFoundOwnerException("존재하지 않는 사장님 입니다.");
+        }
+    }
 }

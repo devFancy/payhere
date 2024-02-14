@@ -20,4 +20,9 @@ public interface OwnerRepository extends JpaRepository<Owner, Long> {
             throw new NotFoundOwnerException();
         }
     }
+
+    default Owner getById(final Long id) {
+        return findById(id)
+                .orElseThrow(NotFoundOwnerException::new);
+    }
 }
