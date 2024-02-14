@@ -17,4 +17,9 @@ public class AuthTokenCreator implements TokenCreator{
 
         return new AuthAccessToken(accessToken);
     }
+
+    public Long extractPayLoad(final String accessToken) {
+        tokenProvider.validateToken(accessToken);
+        return Long.valueOf(tokenProvider.getPayLoad(accessToken));
+    }
 }

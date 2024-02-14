@@ -3,7 +3,7 @@ package com.payhere.auth.application;
 import com.payhere.auth.domain.AccessTokenRepository;
 import com.payhere.auth.domain.AuthAccessToken;
 import com.payhere.auth.domain.hashing.HashingI;
-import com.payhere.auth.dto.AuthInfo;
+import com.payhere.auth.dto.LoginOwner;
 import com.payhere.auth.dto.request.LoginRequest;
 import com.payhere.auth.dto.response.AccessTokenResponse;
 import com.payhere.auth.exception.LoginFailedException;
@@ -29,22 +29,28 @@ public class AuthService {
         this.accessTokenRepository = accessTokenRepository;
     }
 
-    public AuthInfo login(final LoginRequest loginRequest) {
+    public LoginOwner login(final LoginRequest loginRequest) {
         String cellPhoneNumber = loginRequest.getCellPhoneNumber();
         String password = hashing.generateSHA256Hash(loginRequest.getPassword());
         Owner owner = ownerRepository.findByCellPhoneNumberAndPassword(cellPhoneNumber, password)
                 .orElseThrow(LoginFailedException::new);
-        return new AuthInfo(owner.getId(), owner.getCellPhoneNumber());
+        return new LoginOwner(owner.getId());
     }
 
     @Transactional
-    public AccessTokenResponse generateAccessToken(final AuthInfo authInfo) {
-        AuthAccessToken authAccessToken = tokenCreator.createAuthToken(authInfo.getId());
+    public AccessTokenResponse generateAccessToken(final LoginOwner loginOwner) {
+        AuthAccessToken authAccessToken = tokenCreator.createAuthToken(loginOwner.getId());
         return new AccessTokenResponse(authAccessToken.getAccessToken());
     }
 
     @Transactional
     public void deleteToken(final Long ownerId) {
         accessTokenRepository.deleteAllByOwnerId(ownerId);
+    }
+
+    public Long extractOwnerId(final String accessToken) {
+        Long ownerId = tokenCreator.extractPayLoad(accessToken);
+        ownerRepository.validateExistById(ownerId);
+        return ownerId;
     }
 }

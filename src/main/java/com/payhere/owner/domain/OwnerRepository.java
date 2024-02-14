@@ -1,6 +1,7 @@
 package com.payhere.owner.domain;
 
 import com.payhere.owner.domain.entity.Owner;
+import com.payhere.owner.exception.NotFoundOwnerException;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -13,4 +14,10 @@ public interface OwnerRepository extends JpaRepository<Owner, Long> {
             "FROM Owner o " +
             "WHERE o.cellPhoneNumber.value = :cellPhoneNumber AND o.password.value = :password")
     Optional<Owner> findByCellPhoneNumberAndPassword(@Param("cellPhoneNumber") final String cellPhoneNumber, @Param("password") final String password);
+
+    default void validateExistById(final Long ownerId) {
+        if (!existsById(ownerId)) {
+            throw new NotFoundOwnerException();
+        }
+    }
 }
