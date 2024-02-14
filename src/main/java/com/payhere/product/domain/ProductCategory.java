@@ -4,7 +4,6 @@ public enum ProductCategory {
 
     COFFEE_BEANS("커피 원두"),
     HANDMADE("제조 음료"),
-    BOTTLE("병 음료"),
     BAKERY("베이커리"),
     ETC("기타");
 
