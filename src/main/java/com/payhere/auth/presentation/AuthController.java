@@ -6,10 +6,7 @@ import com.payhere.auth.dto.AuthInfo;
 import com.payhere.auth.dto.request.LoginRequest;
 import com.payhere.auth.dto.response.AccessTokenResponse;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 
@@ -28,5 +25,11 @@ public class AuthController {
         AuthInfo authInfo = authService.login(loginRequest);
         AccessTokenResponse authResponse = authService.generateAccessToken(authInfo);
         return ResponseEntity.ok(authResponse);
+    }
+
+    @GetMapping("/logout")
+    public ResponseEntity<Void> logout(AuthInfo authInfo) {
+        authService.deleteToken(authInfo.getId());
+        return ResponseEntity.noContent().build();
     }
 }

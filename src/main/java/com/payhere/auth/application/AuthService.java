@@ -1,5 +1,6 @@
 package com.payhere.auth.application;
 
+import com.payhere.auth.domain.AccessTokenRepository;
 import com.payhere.auth.domain.AuthAccessToken;
 import com.payhere.auth.domain.hashing.HashingI;
 import com.payhere.auth.dto.AuthInfo;
@@ -18,11 +19,14 @@ public class AuthService {
     private final OwnerRepository ownerRepository;
     private final HashingI hashing;
     private final TokenCreator tokenCreator;
+    private final AccessTokenRepository accessTokenRepository;
 
-    public AuthService(final OwnerRepository ownerRepository, final HashingI hashing, final TokenCreator tokenCreator) {
+    public AuthService(final OwnerRepository ownerRepository, final HashingI hashing
+            , final TokenCreator tokenCreator, AccessTokenRepository accessTokenRepository) {
         this.ownerRepository = ownerRepository;
         this.hashing = hashing;
         this.tokenCreator = tokenCreator;
+        this.accessTokenRepository = accessTokenRepository;
     }
 
     public AuthInfo login(final LoginRequest loginRequest) {
@@ -37,5 +41,10 @@ public class AuthService {
     public AccessTokenResponse generateAccessToken(final AuthInfo authInfo) {
         AuthAccessToken authAccessToken = tokenCreator.createAuthToken(authInfo.getId());
         return new AccessTokenResponse(authAccessToken.getAccessToken());
+    }
+
+    @Transactional
+    public void deleteToken(final Long ownerId) {
+        accessTokenRepository.deleteAllByOwnerId(ownerId);
     }
 }
