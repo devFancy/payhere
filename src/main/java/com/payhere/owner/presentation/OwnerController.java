@@ -1,5 +1,6 @@
 package com.payhere.owner.presentation;
 
+import com.payhere.global.ApiResponse;
 import com.payhere.owner.application.OwnerService;
 import com.payhere.owner.dto.SignupRequest;
 import org.springframework.http.HttpStatus;
@@ -19,8 +20,8 @@ public class OwnerController {
     }
 
     @PostMapping("/signup")
-    public ResponseEntity<Void> signUp(@Valid @RequestBody SignupRequest signupRequest) {
-        ownerService.signUp(signupRequest);
-        return ResponseEntity.status(HttpStatus.CREATED).build();
+    public ApiResponse<Long> signUp(@Valid @RequestBody SignupRequest signupRequest) {
+        Long ownerId =  ownerService.signUp(signupRequest);
+        return ApiResponse.created(ownerId);
     }
 }

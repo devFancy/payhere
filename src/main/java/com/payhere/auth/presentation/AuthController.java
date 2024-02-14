@@ -5,6 +5,7 @@ import com.payhere.auth.application.AuthService;
 import com.payhere.auth.dto.LoginOwner;
 import com.payhere.auth.dto.request.LoginRequest;
 import com.payhere.auth.dto.response.AccessTokenResponse;
+import com.payhere.global.ApiResponse;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -21,15 +22,15 @@ public class AuthController {
     }
 
     @PostMapping("/login")
-    public ResponseEntity<AccessTokenResponse> login(@Valid @RequestBody LoginRequest loginRequest) {
+    public ApiResponse<AccessTokenResponse> login(@Valid @RequestBody LoginRequest loginRequest) {
         LoginOwner loginOwner = authService.login(loginRequest);
         AccessTokenResponse authResponse = authService.generateAccessToken(loginOwner);
-        return ResponseEntity.ok(authResponse);
+        return ApiResponse.ok(authResponse);
     }
 
     @GetMapping("/logout")
-    public ResponseEntity<Void> logout(@AuthenticationPrincipal LoginOwner loginOwner) {
+    public ApiResponse<Void> logout(@AuthenticationPrincipal LoginOwner loginOwner) {
         authService.deleteToken(loginOwner.getId());
-        return ResponseEntity.noContent().build();
+        return ApiResponse.noContent();
     }
 }
