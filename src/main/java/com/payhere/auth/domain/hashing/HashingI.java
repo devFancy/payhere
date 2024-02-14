@@ -1,4 +1,4 @@
-package com.payhere.auth.domain;
+package com.payhere.auth.domain.hashing;
 
 public interface HashingI {
 
