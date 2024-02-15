@@ -72,9 +72,9 @@ class ProductRepositoryTest {
         assertThat(result.getSize()).isEqualTo(3);
     }
 
-    @DisplayName("특정 쿼리에 부합하는 상품 이름이 조회된다.")
+    @DisplayName("상품 이름을 기반으로 특정 쿼리에 부합하는 한개 또는 여러개 상품이 조회된다.")
     @Test
-    void 특정_쿼리에_부합하는_상품_이름이_조회된다() {
+    void 상품_이름을_기반으로_특정_쿼리에_부합하는_한개_또는_여러개_상품이_조회된다() {
         // given
         Slice<Product> result = productRepository.findProductSlicePagesByQuery(PageRequest.of(0, 3, DESC, "createdAt"), "아메리카노", "ㅇㅁㄹㅋㄴ");
 
