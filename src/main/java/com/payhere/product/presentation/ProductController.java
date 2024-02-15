@@ -8,9 +8,9 @@ import com.payhere.product.dto.request.ProductCreateRequest;
 import com.payhere.product.dto.request.ProductUpdateRequest;
 import com.payhere.product.dto.response.ProductDetailResponse;
 import com.payhere.product.dto.response.ProductsResponse;
-import lombok.extern.java.Log;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
+import org.springframework.lang.Nullable;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -41,6 +41,13 @@ public class ProductController {
     public ApiResponse<ProductDetailResponse> findProduct(@AuthenticationPrincipal final LoginOwner loginOwner,
                                                           @PathVariable final long productId) {
         ProductDetailResponse response = productService.find(loginOwner, productId);
+        return ApiResponse.ok(response);
+    }
+
+    @GetMapping("/products/search")
+    public ApiResponse<ProductsResponse> searchSlicePosts(@RequestParam @Nullable String query,
+                                                          @PageableDefault(sort = "createdAt", direction = DESC) Pageable pageable) {
+        ProductsResponse response = productService.searchSliceWithQuery(query, pageable);
         return ApiResponse.ok(response);
     }
 

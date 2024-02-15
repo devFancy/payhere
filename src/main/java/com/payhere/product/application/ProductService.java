@@ -7,16 +7,20 @@ import com.payhere.owner.domain.OwnerRepository;
 import com.payhere.owner.domain.entity.Owner;
 import com.payhere.owner.exception.NotFoundOwnerException;
 import com.payhere.product.domain.ProductRepository;
+import com.payhere.product.domain.SearchQuery;
 import com.payhere.product.domain.entity.Product;
 import com.payhere.product.dto.request.ProductCreateServiceRequest;
 import com.payhere.product.dto.request.ProductUpdateServiceRequest;
 import com.payhere.product.dto.response.ProductDetailResponse;
 import com.payhere.product.dto.response.ProductsResponse;
 import com.payhere.product.exception.NotFoundProductException;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Slice;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import static org.springframework.data.domain.Sort.Direction.DESC;
 
 @Transactional(readOnly = true)
 @Service
@@ -58,6 +62,14 @@ public class ProductService {
 
         Product product = productRepository.getById(productId);
         return ProductDetailResponse.of(product);
+    }
+
+    public ProductsResponse searchSliceWithQuery(final String query, Pageable pageable) {
+        pageable = PageRequest.of(pageable.getPageNumber(), pageable.getPageSize(), DESC, "createdAt");
+        SearchQuery searchQuery = new SearchQuery(query);
+
+        Slice<Product> products = productRepository.findProductSlicePagesByQuery(pageable, searchQuery.getValue());
+        return ProductsResponse.ofProductSlice(products);
     }
 
     @Transactional
