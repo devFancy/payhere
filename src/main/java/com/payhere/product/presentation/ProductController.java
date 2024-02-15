@@ -8,6 +8,7 @@ import com.payhere.product.dto.request.ProductCreateRequest;
 import com.payhere.product.dto.request.ProductUpdateRequest;
 import com.payhere.product.dto.response.ProductDetailResponse;
 import com.payhere.product.dto.response.ProductsResponse;
+import lombok.extern.java.Log;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.web.bind.annotation.*;
@@ -33,6 +34,13 @@ public class ProductController {
     @GetMapping("/products")
     public ApiResponse<ProductsResponse> findAll(@PageableDefault(size = 10, sort = "createdAt", direction = DESC) final Pageable pageable) {
         ProductsResponse response = productService.findAll(pageable);
+        return ApiResponse.ok(response);
+    }
+
+    @GetMapping("/products/{productId}")
+    public ApiResponse<ProductDetailResponse> findProduct(@AuthenticationPrincipal final LoginOwner loginOwner,
+                                                          @PathVariable final long productId) {
+        ProductDetailResponse response = productService.find(loginOwner, productId);
         return ApiResponse.ok(response);
     }
 
