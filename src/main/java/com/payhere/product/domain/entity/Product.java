@@ -2,6 +2,7 @@ package com.payhere.product.domain.entity;
 
 import com.payhere.common.BaseEntity;
 import com.payhere.owner.domain.entity.Owner;
+import com.payhere.product.domain.ChoSungQuery;
 import com.payhere.product.domain.ProductCategory;
 import com.payhere.product.domain.ProductSize;
 import lombok.Builder;
@@ -34,6 +35,9 @@ public class Product extends BaseEntity {
     @Column(name = "name", nullable = false)
     private String name;
 
+    @Column(name = "name_init", nullable = true)
+    private String nameInit;
+
     @Column(name = "description", nullable = false)
     private String description;
 
@@ -58,6 +62,7 @@ public class Product extends BaseEntity {
         this.price = price;
         this.cost = cost;
         this.name = name;
+        this.nameInit = ChoSungQuery.extractChoSung(name);
         this.description = description;
         this.barcode = barcode;
         this.expirationDate = expirationDate;
@@ -72,6 +77,7 @@ public class Product extends BaseEntity {
         this.price = price;
         this.cost = cost;
         this.name = name;
+        this.nameInit = ChoSungQuery.extractChoSung(name);
         this.description = description;
         this.barcode = barcode;
         this.expirationDate = expirationDate;
