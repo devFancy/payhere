@@ -52,7 +52,8 @@ public class ProductService {
         }
     }
 
-    public ProductsResponse findAll(final Pageable pageable) {
+    public ProductsResponse findAll(final LoginOwner owner, final Pageable pageable) {
+        validateOwnerExists(owner.getId());
         Slice<Product> products = productRepository.findProducts(pageable);
         return ProductsResponse.ofProductSlice(products);
     }
@@ -65,7 +66,9 @@ public class ProductService {
         return ProductDetailResponse.of(product);
     }
 
-    public ProductsResponse searchSliceWithQuery(final String query, Pageable pageable) {
+    public ProductsResponse searchSliceWithQuery(final LoginOwner owner, final String query, Pageable pageable) {
+        validateOwnerExists(owner.getId());
+
         pageable = PageRequest.of(pageable.getPageNumber(), pageable.getPageSize(), DESC, "createdAt");
         SearchQuery searchQuery = new SearchQuery(query);
 

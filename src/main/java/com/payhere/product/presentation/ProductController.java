@@ -32,8 +32,9 @@ public class ProductController {
     }
 
     @GetMapping("/products")
-    public ApiResponse<ProductsResponse> findAll(@PageableDefault(size = 10, sort = "createdAt", direction = DESC) final Pageable pageable) {
-        ProductsResponse response = productService.findAll(pageable);
+    public ApiResponse<ProductsResponse> findAll(@AuthenticationPrincipal final LoginOwner loginOwner,
+                                                 @PageableDefault(size = 10, sort = "createdAt", direction = DESC) final Pageable pageable) {
+        ProductsResponse response = productService.findAll(loginOwner, pageable);
         return ApiResponse.ok(response);
     }
 
@@ -45,9 +46,10 @@ public class ProductController {
     }
 
     @GetMapping("/products/search")
-    public ApiResponse<ProductsResponse> searchSlicePosts(@RequestParam @Nullable String query,
+    public ApiResponse<ProductsResponse> searchSlicePosts(@AuthenticationPrincipal final LoginOwner loginOwner,
+                                                          @RequestParam @Nullable String query,
                                                           @PageableDefault(sort = "createdAt", direction = DESC) Pageable pageable) {
-        ProductsResponse response = productService.searchSliceWithQuery(query, pageable);
+        ProductsResponse response = productService.searchSliceWithQuery(loginOwner, query, pageable);
         return ApiResponse.ok(response);
     }
 
