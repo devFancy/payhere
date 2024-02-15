@@ -11,7 +11,10 @@ import com.payhere.product.domain.entity.Product;
 import com.payhere.product.dto.request.ProductCreateServiceRequest;
 import com.payhere.product.dto.request.ProductUpdateServiceRequest;
 import com.payhere.product.dto.response.ProductDetailResponse;
+import com.payhere.product.dto.response.ProductsResponse;
 import com.payhere.product.exception.NotFoundProductException;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Slice;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -42,6 +45,11 @@ public class ProductService {
         if (!ownerRepository.existsById(ownerId)) {
             throw new NotFoundOwnerException("존재하지 않는 사장님 입니다.");
         }
+    }
+
+    public ProductsResponse findAll(final Pageable pageable) {
+        Slice<Product> products = productRepository.findProducts(pageable);
+        return ProductsResponse.ofProductSlice(products);
     }
 
     @Transactional
