@@ -52,6 +52,14 @@ public class ProductService {
         return ProductsResponse.ofProductSlice(products);
     }
 
+    public ProductDetailResponse find(final LoginOwner loginOwner, final long productId) {
+        Owner owner = ownerRepository.getById(loginOwner.getId());
+        validateOwnerExists(owner.getId());
+
+        Product product = productRepository.getById(productId);
+        return ProductDetailResponse.of(product);
+    }
+
     @Transactional
     public void updateProduct(final LoginOwner loginOwner, final Long productId, final ProductUpdateServiceRequest request) {
         Owner owner = ownerRepository.getById(loginOwner.getId());
@@ -62,17 +70,17 @@ public class ProductService {
                 , request.getDescription(), request.getBarcode(), request.getExpirationDate(), request.getProductSize());
     }
 
-    private Product findProductObject(final Long productId) {
-        return productRepository.findById(productId)
-                .orElseThrow(NotFoundProductException::new);
-    }
-
     @Transactional
     public void deleteProduct(final LoginOwner loginOwner, final Long productId) {
         Product product = findProductObject(loginOwner.getId());
         validateProductOwnership(loginOwner, product);
 
         productRepository.deleteById(productId);
+    }
+
+    private Product findProductObject(final Long productId) {
+        return productRepository.findById(productId)
+                .orElseThrow(NotFoundProductException::new);
     }
 
     private void validateProductOwnership(final LoginOwner loginOwner, final Product product) {
