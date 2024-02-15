@@ -36,16 +36,17 @@ public class ProductController {
         return ApiResponse.ok(response);
     }
 
+    @PatchMapping("/products/{productId}")
     public ApiResponse<ProductDetailResponse> updateProduct(@AuthenticationPrincipal final LoginOwner loginOwner,
-                                                            @Valid @PathVariable final Long productId,
-                                                            @RequestBody final ProductUpdateRequest request) {
+                                                            @PathVariable final Long productId,
+                                                            @Valid @RequestBody final ProductUpdateRequest request) {
         productService.updateProduct(loginOwner, productId, request.toServiceRequest());
         return ApiResponse.noContent();
     }
 
-    @DeleteMapping("/{productId}")
+    @DeleteMapping("/products/{productId}")
     public ApiResponse<Void> deleteProduct(@AuthenticationPrincipal final LoginOwner loginOwner,
-                                           @Valid @PathVariable final Long productId) {
+                                           @PathVariable final Long productId) {
         productService.deleteProduct(loginOwner, productId);
         return ApiResponse.noContent();
     }
