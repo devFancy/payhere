@@ -1,6 +1,7 @@
 package com.payhere.owner.domain.entity;
 
 
+import com.payhere.common.BaseEntity;
 import com.payhere.owner.domain.CellPhoneNumber;
 import com.payhere.owner.domain.Password;
 import lombok.Builder;
@@ -9,7 +10,7 @@ import javax.persistence.*;
 
 @Table(name = "owners")
 @Entity
-public class Owner {
+public class Owner extends BaseEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

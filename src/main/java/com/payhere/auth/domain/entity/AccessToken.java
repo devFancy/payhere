@@ -1,12 +1,13 @@
 package com.payhere.auth.domain.entity;
 
+import com.payhere.common.BaseEntity;
 import com.payhere.owner.domain.entity.Owner;
 
 import javax.persistence.*;
 
 @Table(name = "auth_tokens")
 @Entity
-public class AccessToken {
+public class AccessToken extends BaseEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
