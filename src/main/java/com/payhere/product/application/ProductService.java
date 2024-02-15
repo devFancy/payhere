@@ -6,6 +6,7 @@ import com.payhere.auth.exception.AuthorizationException;
 import com.payhere.owner.domain.OwnerRepository;
 import com.payhere.owner.domain.entity.Owner;
 import com.payhere.owner.exception.NotFoundOwnerException;
+import com.payhere.product.domain.ChoSungQuery;
 import com.payhere.product.domain.ProductRepository;
 import com.payhere.product.domain.SearchQuery;
 import com.payhere.product.domain.entity.Product;
@@ -68,7 +69,12 @@ public class ProductService {
         pageable = PageRequest.of(pageable.getPageNumber(), pageable.getPageSize(), DESC, "createdAt");
         SearchQuery searchQuery = new SearchQuery(query);
 
-        Slice<Product> products = productRepository.findProductSlicePagesByQuery(pageable, searchQuery.getValue());
+        // 검색 쿼리의 초성 추출
+        String queryForChosung = ChoSungQuery.extractChoSung(searchQuery.getValue());
+
+        // Like 검색용 쿼리 준비
+        String queryForLike = "%" + searchQuery.getValue() + "%";
+        Slice<Product> products = productRepository.findProductSlicePagesByQuery(pageable, queryForLike, queryForChosung);
         return ProductsResponse.ofProductSlice(products);
     }
 

@@ -18,6 +18,6 @@ public interface ProductRepository extends JpaRepository<Product, Long> {
                 .orElseThrow(NotFoundProductException::new);
     }
 
-    @Query(value = "SELECT p FROM Product p WHERE p.name LIKE %:query%")
-    Slice<Product> findProductSlicePagesByQuery(Pageable pageable, @Param("query") String query);
+    @Query(value = "SELECT p FROM Product p WHERE p.name LIKE %:query% OR p.nameInit LIKE %:queryForChosung%")
+    Slice<Product> findProductSlicePagesByQuery(Pageable pageable, @Param("query") String query, @Param("queryForChosung") String queryForChosung);
 }
