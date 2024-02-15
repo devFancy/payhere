@@ -3,27 +3,22 @@ package com.payhere.product.dto.response;
 import com.payhere.product.domain.ProductCategory;
 import com.payhere.product.domain.ProductSize;
 import com.payhere.product.domain.entity.Product;
-import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
-
 import java.time.LocalDateTime;
 
 @Getter
-@NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class ProductDetailResponse {
 
-    private Long id;
-    private ProductCategory productCategory;
-    private int price;
-    private int cost;
-    private String name;
-    private String description;
-    private String barcode;
-    private LocalDateTime expirationDate;
-    private ProductSize productSize;
-
+    private final Long id;
+    private final ProductCategory productCategory;
+    private final int price;
+    private final int cost;
+    private final String name;
+    private final String description;
+    private final String barcode;
+    private final LocalDateTime expirationDate;
+    private final ProductSize productSize;
 
     @Builder
     public ProductDetailResponse(final Long id, final ProductCategory productCategory, final int price, final int cost,
