@@ -5,6 +5,7 @@ import com.payhere.owner.domain.entity.Owner;
 import com.payhere.product.domain.ChoSungQuery;
 import com.payhere.product.domain.ProductCategory;
 import com.payhere.product.domain.ProductSize;
+import com.payhere.product.exception.InvalidProductException;
 import lombok.Builder;
 
 import javax.persistence.*;
@@ -13,6 +14,8 @@ import java.time.LocalDateTime;
 @Table(name = "products")
 @Entity
 public class Product extends BaseEntity {
+
+    private static final int MAX_DESCRIPTION_LENGTH = 255;
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -57,6 +60,9 @@ public class Product extends BaseEntity {
     public Product(final Owner owner, final ProductCategory productCategory, final int price, final int cost
             , final String name, final String description, final String barcode
             , final LocalDateTime expirationDate, final ProductSize productSize) {
+        validatePrice(price);
+        validateCost(cost);
+        validateDescriptionLength(description);
         this.owner = owner;
         this.productCategory = productCategory;
         this.price = price;
@@ -72,6 +78,9 @@ public class Product extends BaseEntity {
     public void change(final Owner owner, final ProductCategory productCategory, final int price, final int cost,
                        final String name, final String description, final String barcode,
                        final LocalDateTime expirationDate, final ProductSize productSize) {
+        validatePrice(price);
+        validateCost(cost);
+        validateDescriptionLength(description);
         this.owner = owner;
         this.productCategory = productCategory;
         this.price = price;
@@ -89,6 +98,27 @@ public class Product extends BaseEntity {
             return false;
         }
         return owner.getId().equals(accessOwnerId);
+    }
+
+    private void validatePrice(final int price) {
+        if (price <= 0) {
+            throw new InvalidProductException("상품 가격은 0원 이상이어야 합니다.");
+        }
+    }
+
+    private void validateCost(final int cost) {
+        if (cost <= 0) {
+            throw new InvalidProductException("상품 원가는 0원 이상이어야 합니다.");
+        }
+    }
+
+    private void validateDescriptionLength(final String description) {
+        if (description.isBlank()) {
+            throw new InvalidProductException("상품 설명은 공백일 수 없습니다.");
+        }
+        if (description.length() > MAX_DESCRIPTION_LENGTH) {
+            throw new InvalidProductException(String.format("상품 설명의 길이는 %d를 초과할 수 없습니다.", MAX_DESCRIPTION_LENGTH));
+        }
     }
 
     public Long getId() {

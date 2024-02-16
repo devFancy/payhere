@@ -17,8 +17,8 @@ import java.time.LocalDateTime;
 public class ProductCreateRequest {
 
     private ProductCategory productCategory;
-    @NotNull(message = "상품 가격을 입력해 주세요.")
 
+    @NotNull(message = "상품 가격을 입력해 주세요.")
     private int price;
 
     @NotNull(message = "상품 원가를 입력해 주세요.")

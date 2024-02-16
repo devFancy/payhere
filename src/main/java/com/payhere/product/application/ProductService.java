@@ -1,7 +1,6 @@
 package com.payhere.product.application;
 
 
-import com.payhere.auth.dto.LoginOwner;
 import com.payhere.auth.exception.AuthorizationException;
 import com.payhere.owner.domain.OwnerRepository;
 import com.payhere.owner.domain.entity.Owner;
@@ -36,7 +35,7 @@ public class ProductService {
     }
 
     @Transactional
-    public ProductDetailResponse createProduct(final Long ownerId, final ProductCreateServiceRequest request) {
+    public ProductDetailResponse save(final Long ownerId, final ProductCreateServiceRequest request) {
         validateOwnerExists(ownerId);
 
         Owner foundOwner = ownerRepository.getById(ownerId);
@@ -52,22 +51,22 @@ public class ProductService {
         }
     }
 
-    public ProductsResponse findAll(final LoginOwner owner, final Pageable pageable) {
-        validateOwnerExists(owner.getId());
+    public ProductsResponse findAll(final Long ownerId, final Pageable pageable) {
+        validateOwnerExists(ownerId);
         Slice<Product> products = productRepository.findProducts(pageable);
         return ProductsResponse.ofProductSlice(products);
     }
 
-    public ProductDetailResponse find(final LoginOwner loginOwner, final long productId) {
-        Owner owner = ownerRepository.getById(loginOwner.getId());
+    public ProductDetailResponse find(final Long ownerId, final long productId) {
+        Owner owner = ownerRepository.getById(ownerId);
         validateOwnerExists(owner.getId());
 
         Product product = productRepository.getById(productId);
         return ProductDetailResponse.of(product);
     }
 
-    public ProductsResponse searchSliceWithQuery(final LoginOwner owner, final String query, Pageable pageable) {
-        validateOwnerExists(owner.getId());
+    public ProductsResponse searchSliceWithQuery(final Long ownerId, final String query, Pageable pageable) {
+        validateOwnerExists(ownerId);
 
         pageable = PageRequest.of(pageable.getPageNumber(), pageable.getPageSize(), DESC, "createdAt");
         SearchQuery searchQuery = new SearchQuery(query);
@@ -82,19 +81,19 @@ public class ProductService {
     }
 
     @Transactional
-    public void updateProduct(final LoginOwner loginOwner, final Long productId, final ProductUpdateServiceRequest request) {
-        Owner owner = ownerRepository.getById(loginOwner.getId());
+    public void update(final Long ownerId, final Long productId, final ProductUpdateServiceRequest request) {
+        Owner owner = ownerRepository.getById(ownerId);
         Product product = findProductObject(productId);
-        validateProductOwnership(loginOwner, product);
+        validateProductOwnership(ownerId, product);
 
         product.change(owner, request.getProductCategory(), request.getPrice(), request.getCost(), request.getName()
                 , request.getDescription(), request.getBarcode(), request.getExpirationDate(), request.getProductSize());
     }
 
     @Transactional
-    public void deleteProduct(final LoginOwner loginOwner, final Long productId) {
-        Product product = findProductObject(loginOwner.getId());
-        validateProductOwnership(loginOwner, product);
+    public void delete(final Long ownerId, final Long productId) {
+        Product product = findProductObject(productId);
+        validateProductOwnership(ownerId, product);
 
         productRepository.deleteById(productId);
     }
@@ -104,8 +103,8 @@ public class ProductService {
                 .orElseThrow(NotFoundProductException::new);
     }
 
-    private void validateProductOwnership(final LoginOwner loginOwner, final Product product) {
-        if (!product.isOwner(loginOwner.getId())) {
+    private void validateProductOwnership(final Long ownerId, final Product product) {
+        if (!product.isOwner(ownerId)) {
             throw new AuthorizationException();
         }
     }
