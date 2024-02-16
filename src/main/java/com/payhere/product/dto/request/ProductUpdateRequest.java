@@ -17,8 +17,8 @@ import java.time.LocalDateTime;
 public class ProductUpdateRequest {
 
     private ProductCategory productCategory;
-    @NotNull(message = "상품 가격을 입력해 주세요.")
 
+    @NotNull(message = "상품 가격을 입력해 주세요.")
     private int price;
 
     @NotNull(message = "상품 원가를 입력해 주세요.")
@@ -34,6 +34,7 @@ public class ProductUpdateRequest {
 
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm")
     private LocalDateTime expirationDate;
+
     private ProductSize productSize;
 
 
