@@ -53,7 +53,7 @@ class ProductRepositoryTest {
 
     @DisplayName("등록된 상품과 회원 테이블이 정상적으로 매핑된다.")
     @Test
-    void 등록된_상품과_회원_테이블이_정상적으로_매핑된다() {
+    void getById() {
         // given
         Product foundProduct = productRepository.getById(product1.getId());
 
@@ -63,7 +63,7 @@ class ProductRepositoryTest {
 
     @DisplayName("등록된 상품들이 최신순으로 모두 조회된다.")
     @Test
-    void 등록된_상품들이_최신순으로_모두_조회된다() {
+    void findProducts() {
         // given
         Slice<Product> result = productRepository.findProducts(PageRequest.of(0, 3, DESC, "createdAt"));
 
@@ -74,7 +74,7 @@ class ProductRepositoryTest {
 
     @DisplayName("상품 이름을 기반으로 특정 쿼리에 부합하는 한개 또는 여러개 상품이 조회된다.")
     @Test
-    void 상품_이름을_기반으로_특정_쿼리에_부합하는_한개_또는_여러개_상품이_조회된다() {
+    void findProductSlicePagesByQuery() {
         // given
         Slice<Product> result = productRepository.findProductSlicePagesByQuery(PageRequest.of(0, 3, DESC, "createdAt"), "아메리카노", "ㅇㅁㄹㅋㄴ");
 

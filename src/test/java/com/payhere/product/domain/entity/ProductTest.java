@@ -17,9 +17,9 @@ class ProductTest {
 
     private static final int MAX_DESCRIPTION_LENGTH = 255;
 
-    @DisplayName("상품을 생성한다")
+    @DisplayName("신규 상품을 등록한다")
     @Test
-    void 상품을_생성한다() {
+    void saveProduct() {
         // given
         Owner owner = new Owner(new CellPhoneNumber("010-1234-5678"), new Password("qwer1234!!"));
 
@@ -30,7 +30,7 @@ class ProductTest {
     @DisplayName("상품 가격이 0원 이하이면 예외를 던진다.")
     @ParameterizedTest
     @ValueSource(ints = {-1000, -1, 0})
-    void 상품_가격이_0원_이하이면_예외를_던진다(final int price) {
+    void throwExceptionIfPriceIsZeroOrNegative(final int price) {
         // given
         Owner owner = new Owner(new CellPhoneNumber("010-1234-5678"), new Password("qwer1234!!"));
 
@@ -43,7 +43,7 @@ class ProductTest {
     @DisplayName("상품 원가가 0원 이하이면 예외를 던진다.")
     @ParameterizedTest
     @ValueSource(ints = {-1000, -1, 0})
-    void 상품_원가가_0원_이하이면_예외를_던진다(final int cost) {
+    void throwExceptionIfCostIsZeroOrNegative(final int cost) {
         // given
         Owner owner = new Owner(new CellPhoneNumber("010-1234-5678"), new Password("qwer1234!!"));
 
@@ -56,7 +56,7 @@ class ProductTest {
     @DisplayName("상품 설명 길이가 공백이면 예외를 던진다.")
     @ParameterizedTest
     @ValueSource(strings = {"", "   "})
-    void 상품_설명_길이가_공백이면_예외를_던진다(final String description) {
+    void throwExceptionIfDescriptionIsEmpty(final String description) {
         // given
         Owner owner = new Owner(new CellPhoneNumber("010-1234-5678"), new Password("qwer1234!!"));
 
@@ -68,7 +68,7 @@ class ProductTest {
 
     @DisplayName("상품 설명 길이가 255를 초과하는 경우 예외를 던진다.")
     @Test
-    void 상품_설명_길이가_255를_초과하는_경우_예외를_던진다() {
+    void throwExceptionIfDescriptionExceedsMaxLength() {
         // given
         Owner owner = new Owner(new CellPhoneNumber("010-1234-5678"), new Password("qwer1234!!"));
         String 잘못된_상품_길이 = "1".repeat(256);
