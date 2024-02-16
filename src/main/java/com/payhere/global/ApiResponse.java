@@ -34,12 +34,12 @@ public class ApiResponse<T> {
         return of(HttpStatus.NO_CONTENT, null);
     }
 
-    public static <T> ApiResponse<T> badRequest(T data) {
-        return of(HttpStatus.BAD_REQUEST, data);
+    public static ApiResponse<ErrorResponse> badRequest(ErrorResponse errorResponse) {
+        return of(HttpStatus.BAD_REQUEST, errorResponse.getMessage(), null);
     }
 
-    public static <T> ApiResponse<T> UnAuthorized(T data) {
-        return of(HttpStatus.UNAUTHORIZED, data);
+    public static ApiResponse<ErrorResponse> UnAuthorized(ErrorResponse errorResponse) {
+        return of(HttpStatus.UNAUTHORIZED, errorResponse.getMessage(), null);
     }
 
     public static ApiResponse<ErrorResponse> NotFound(ErrorResponse errorResponse) {
