@@ -33,6 +33,18 @@ public class ApiResponse<T> {
         return of(HttpStatus.NO_CONTENT, null);
     }
 
+    public static <T> ApiResponse<T> badRequest(T data) {
+        return of(HttpStatus.BAD_REQUEST, data);
+    }
+
+    public static <T> ApiResponse<T> UnAuthorized(T data) {
+        return of(HttpStatus.UNAUTHORIZED, data);
+    }
+
+    public static <T> ApiResponse<T> NotFound(T data) {
+        return of(HttpStatus.NOT_FOUND, data);
+    }
+
     @Getter
     private static class Meta {
         private final int code;
