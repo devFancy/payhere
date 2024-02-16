@@ -1,5 +1,6 @@
 package com.payhere.global;
 
+import com.payhere.global.error.dto.ErrorResponse;
 import lombok.Getter;
 import org.springframework.http.HttpStatus;
 
@@ -31,6 +32,22 @@ public class ApiResponse<T> {
 
     public static <T> ApiResponse<T> noContent() {
         return of(HttpStatus.NO_CONTENT, null);
+    }
+
+    public static ApiResponse<ErrorResponse> badRequest(ErrorResponse errorResponse) {
+        return of(HttpStatus.BAD_REQUEST, errorResponse.getMessage(), null);
+    }
+
+    public static ApiResponse<ErrorResponse> UnAuthorized(ErrorResponse errorResponse) {
+        return of(HttpStatus.UNAUTHORIZED, errorResponse.getMessage(), null);
+    }
+
+    public static ApiResponse<ErrorResponse> NotFound(ErrorResponse errorResponse) {
+        return of(HttpStatus.NOT_FOUND, errorResponse.getMessage(), null);
+    }
+
+    public static ApiResponse<ErrorResponse> internalServerError(ErrorResponse errorResponse) {
+        return of(HttpStatus.INTERNAL_SERVER_ERROR, errorResponse.getMessage(), null);
     }
 
     @Getter
