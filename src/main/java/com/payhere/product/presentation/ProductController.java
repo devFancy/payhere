@@ -12,7 +12,6 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.lang.Nullable;
 import org.springframework.web.bind.annotation.*;
-
 import javax.validation.Valid;
 
 import static org.springframework.data.domain.Sort.Direction.DESC;
@@ -26,22 +25,22 @@ public class ProductController {
     }
 
     @PostMapping("/products/new")
-    public ApiResponse<ProductDetailResponse> saveProduct(@AuthenticationPrincipal final LoginOwner loginOwner,
-                                                          @Valid @RequestBody final ProductCreateRequest request) {
-        return ApiResponse.ok(productService.createProduct(loginOwner.getId(), request.toServiceRequest()));
+    public ApiResponse<ProductDetailResponse> save(@AuthenticationPrincipal final LoginOwner loginOwner,
+                                                   @Valid @RequestBody final ProductCreateRequest request) {
+        return ApiResponse.ok(productService.save(loginOwner.getId(), request.toServiceRequest()));
     }
 
     @GetMapping("/products")
     public ApiResponse<ProductsResponse> findAll(@AuthenticationPrincipal final LoginOwner loginOwner,
                                                  @PageableDefault(size = 10, sort = "createdAt", direction = DESC) final Pageable pageable) {
-        ProductsResponse response = productService.findAll(loginOwner, pageable);
+        ProductsResponse response = productService.findAll(loginOwner.getId(), pageable);
         return ApiResponse.ok(response);
     }
 
     @GetMapping("/products/{productId}")
     public ApiResponse<ProductDetailResponse> findProduct(@AuthenticationPrincipal final LoginOwner loginOwner,
                                                           @PathVariable final long productId) {
-        ProductDetailResponse response = productService.find(loginOwner, productId);
+        ProductDetailResponse response = productService.find(loginOwner.getId(), productId);
         return ApiResponse.ok(response);
     }
 
@@ -49,22 +48,22 @@ public class ProductController {
     public ApiResponse<ProductsResponse> searchSlicePosts(@AuthenticationPrincipal final LoginOwner loginOwner,
                                                           @RequestParam @Nullable String query,
                                                           @PageableDefault(sort = "createdAt", direction = DESC) Pageable pageable) {
-        ProductsResponse response = productService.searchSliceWithQuery(loginOwner, query, pageable);
+        ProductsResponse response = productService.searchSliceWithQuery(loginOwner.getId(), query, pageable);
         return ApiResponse.ok(response);
     }
 
     @PatchMapping("/products/{productId}")
-    public ApiResponse<ProductDetailResponse> updateProduct(@AuthenticationPrincipal final LoginOwner loginOwner,
-                                                            @PathVariable final Long productId,
-                                                            @Valid @RequestBody final ProductUpdateRequest request) {
-        productService.updateProduct(loginOwner, productId, request.toServiceRequest());
+    public ApiResponse<ProductDetailResponse> update(@AuthenticationPrincipal final LoginOwner loginOwner,
+                                                     @PathVariable final Long productId,
+                                                     @Valid @RequestBody final ProductUpdateRequest request) {
+        productService.update(loginOwner.getId(), productId, request.toServiceRequest());
         return ApiResponse.noContent();
     }
 
     @DeleteMapping("/products/{productId}")
-    public ApiResponse<Void> deleteProduct(@AuthenticationPrincipal final LoginOwner loginOwner,
-                                           @PathVariable final Long productId) {
-        productService.deleteProduct(loginOwner, productId);
+    public ApiResponse<Void> delete(@AuthenticationPrincipal final LoginOwner loginOwner,
+                                    @PathVariable final Long productId) {
+        productService.delete(loginOwner.getId(), productId);
         return ApiResponse.noContent();
     }
 }
