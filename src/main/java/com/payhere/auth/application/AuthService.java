@@ -6,7 +6,7 @@ import com.payhere.auth.domain.hashing.HashingI;
 import com.payhere.auth.dto.LoginOwner;
 import com.payhere.auth.dto.request.LoginRequest;
 import com.payhere.auth.dto.response.AccessTokenResponse;
-import com.payhere.auth.exception.LoginFailedException;
+import com.payhere.auth.exception.InvalidLoginException;
 import com.payhere.owner.domain.OwnerRepository;
 import com.payhere.owner.domain.entity.Owner;
 import org.springframework.stereotype.Service;
@@ -33,7 +33,7 @@ public class AuthService {
         String cellPhoneNumber = loginRequest.getCellPhoneNumber();
         String password = hashing.generateSHA256Hash(loginRequest.getPassword());
         Owner owner = ownerRepository.findByCellPhoneNumberAndPassword(cellPhoneNumber, password)
-                .orElseThrow(LoginFailedException::new);
+                .orElseThrow(InvalidLoginException::new);
         return new LoginOwner(owner.getId());
     }
 
