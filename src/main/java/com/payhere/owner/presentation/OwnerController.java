@@ -20,8 +20,9 @@ public class OwnerController {
     }
 
     @PostMapping("/signup")
-    public ApiResponse<Long> signUp(@Valid @RequestBody SignupRequest signupRequest) {
+    public ResponseEntity<ApiResponse<Long>> signUp(@Valid @RequestBody final SignupRequest signupRequest) {
         Long ownerId =  ownerService.signUp(signupRequest);
-        return ApiResponse.created(ownerId);
+        ApiResponse<Long> apiResponse = ApiResponse.created(ownerId);
+        return new ResponseEntity<>(apiResponse, HttpStatus.CREATED);
     }
 }
