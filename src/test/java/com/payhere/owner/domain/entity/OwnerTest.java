@@ -2,7 +2,6 @@ package com.payhere.owner.domain.entity;
 
 import com.payhere.owner.domain.CellPhoneNumber;
 import com.payhere.owner.domain.Password;
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 

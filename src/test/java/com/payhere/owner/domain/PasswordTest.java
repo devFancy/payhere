@@ -3,7 +3,6 @@ package com.payhere.owner.domain;
 import com.payhere.auth.domain.hashing.HashingFactory;
 import com.payhere.auth.domain.hashing.HashingI;
 import com.payhere.owner.exception.InvalidPasswordFormatException;
-import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;

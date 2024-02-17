@@ -23,13 +23,12 @@ import java.util.List;
 
 import static com.payhere.common.fixtures.OwnerFixtures.사장님;
 import static com.payhere.common.fixtures.ProductFixtures.*;
-import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.BDDMockito.given;
+import static org.mockito.BDDMockito.willDoNothing;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
-import static org.mockito.BDDMockito.given;
-import static org.mockito.BDDMockito.willDoNothing;
 
 @WebMvcTest(controllers = {
         ProductController.class,

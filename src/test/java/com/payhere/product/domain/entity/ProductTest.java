@@ -11,7 +11,7 @@ import org.junit.jupiter.params.provider.ValueSource;
 
 import static com.payhere.common.fixtures.ProductFixtures.*;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 
 class ProductTest {
 

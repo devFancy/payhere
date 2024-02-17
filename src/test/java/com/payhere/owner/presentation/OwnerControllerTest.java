@@ -15,7 +15,6 @@ import org.springframework.test.web.servlet.MockMvc;
 
 import static com.payhere.common.fixtures.OwnerFixtures.사장님_비밀번호;
 import static com.payhere.common.fixtures.OwnerFixtures.사장님_휴대폰_번호;
-import static org.junit.jupiter.api.Assertions.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
