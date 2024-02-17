@@ -1,6 +1,8 @@
 package com.payhere.auth.dto.request;
 
 
+import lombok.Builder;
+
 import javax.validation.constraints.NotBlank;
 
 public class LoginRequest {
@@ -14,6 +16,7 @@ public class LoginRequest {
     protected LoginRequest() {
     }
 
+    @Builder
     public LoginRequest(final String cellPhoneNumber, final String password) {
         this.cellPhoneNumber = cellPhoneNumber;
         this.password = password;
