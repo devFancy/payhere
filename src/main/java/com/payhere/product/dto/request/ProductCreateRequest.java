@@ -34,6 +34,8 @@ public class ProductCreateRequest {
 
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm")
     private LocalDateTime expirationDate;
+
+    @NotNull(message = "상품 사이즈를 선택해주세요.")
     private ProductSize productSize;
 
     @Builder
