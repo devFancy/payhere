@@ -62,7 +62,9 @@ public class Product extends BaseEntity {
             , final LocalDateTime expirationDate, final ProductSize productSize) {
         validatePrice(price);
         validateCost(cost);
+        validateName(name);
         validateDescriptionLength(description);
+        validateProductSize(productSize);
         this.owner = owner;
         this.productCategory = productCategory;
         this.price = price;
@@ -80,7 +82,9 @@ public class Product extends BaseEntity {
                        final LocalDateTime expirationDate, final ProductSize productSize) {
         validatePrice(price);
         validateCost(cost);
+        validateName(name);
         validateDescriptionLength(description);
+        validateProductSize(productSize);
         this.owner = owner;
         this.productCategory = productCategory;
         this.price = price;
@@ -118,6 +122,18 @@ public class Product extends BaseEntity {
         }
         if (description.length() > MAX_DESCRIPTION_LENGTH) {
             throw new InvalidProductException(String.format("상품 설명의 길이는 %d를 초과할 수 없습니다.", MAX_DESCRIPTION_LENGTH));
+        }
+    }
+
+    private void validateName(final String name) {
+        if(name.isBlank()) {
+            throw new InvalidProductException("상품 이름은 공백일 수 없습니다.");
+        }
+    }
+
+    private void validateProductSize(final ProductSize productSize) {
+        if (productSize == null) {
+            throw new InvalidProductException("상품 사이즈를 선택해 주세요.");
         }
     }
 
