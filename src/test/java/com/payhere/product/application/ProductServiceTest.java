@@ -48,7 +48,7 @@ class ProductServiceTest {
         ownerRepository.deleteAllInBatch();
     }
 
-    @DisplayName("로그인한 회원은 상품을 등록할 수 있다.")
+    @DisplayName("로그인한 사장님(회원)은 상품을 등록할 수 있다.")
     @Test
     void saveProduct() {
         // given
@@ -74,7 +74,7 @@ class ProductServiceTest {
         );
     }
 
-    @DisplayName("로그인한 회원은 등록된 상품을 모두 조회할 수 있다.")
+    @DisplayName("로그인한 사장님(회원)은 등록된 상품을 모두 조회할 수 있다.")
     @Test
     void findAllProducts() {
         // given
@@ -99,7 +99,7 @@ class ProductServiceTest {
         );
     }
 
-    @DisplayName("로그인한 회원은 상품의 상세내역을 조회할 수 있다.")
+    @DisplayName("로그인한 사장님(회원)은 상품의 상세내역을 조회할 수 있다.")
     @Test
     void findProduct() {
         // given
@@ -125,7 +125,7 @@ class ProductServiceTest {
         );
     }
 
-    @DisplayName("로그인한 회원은 본인이 등록한 상품을 수정할 수 있다.")
+    @DisplayName("로그인한 사장님(회원)은 본인이 등록한 상품을 수정할 수 있다.")
     @Test
     void updateProduct() {
         // given
@@ -152,7 +152,7 @@ class ProductServiceTest {
         );
     }
 
-    @DisplayName("로그인한 회원은 본인이 등록한 상품이 아니면 수정할 수 없다.")
+    @DisplayName("로그인한 사장님(회원)은 본인이 등록한 상품이 아니면 수정할 수 없다.")
     @Test
     void ShouldNotUpdateProductIfNotOwner() {
         // given
@@ -183,7 +183,7 @@ class ProductServiceTest {
         );
     }
 
-    @DisplayName("로그인한 회원은 본인이 등록한 상품을 삭제할 수 있다.")
+    @DisplayName("로그인한 사장님(회원)은 본인이 등록한 상품을 삭제할 수 있다.")
     @Test
     void deleteProduct() {
         // given
@@ -201,7 +201,7 @@ class ProductServiceTest {
         assertThat(foundProduct).isEmpty();
     }
 
-    @DisplayName("로그인한 회원은 본인이 등록한 상품이 아니면 삭제할 수 없다.")
+    @DisplayName("로그인한 사장님(회원)은 본인이 등록한 상품이 아니면 삭제할 수 없다.")
     @Test
     void ShouldNotDeleteProductIfNotOwner() {
         // given
