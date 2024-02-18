@@ -3,6 +3,7 @@ package com.payhere.owner.presentation;
 import com.payhere.global.ApiResponse;
 import com.payhere.owner.application.OwnerService;
 import com.payhere.owner.dto.SignupRequest;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -12,6 +13,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import javax.validation.Valid;
 
+@Tag(name = "owners", description = "사장님(회원) 관련 API")
 @RestController
 @RequestMapping("/owners")
 public class OwnerController {
