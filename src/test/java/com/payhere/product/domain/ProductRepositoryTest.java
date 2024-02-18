@@ -74,7 +74,7 @@ class ProductRepositoryTest {
 
     @DisplayName("상품 이름을 기반으로 특정 쿼리에 부합하는 한개 또는 여러개 상품이 조회된다.")
     @Test
-    void findProductSlicePagesByQuery() {
+    void findProductSlicePages_ByQuery() {
         // given
         Slice<Product> result = productRepository.findProductSlicePagesByQuery(PageRequest.of(0, 3, DESC, "createdAt"), "아메리카노", "ㅇㅁㄹㅋㄴ");
 

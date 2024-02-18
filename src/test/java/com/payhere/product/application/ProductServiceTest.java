@@ -156,7 +156,7 @@ class ProductServiceTest {
 
     @DisplayName("로그인한 사장님(회원)은 본인이 등록한 상품이 아니면 수정할 수 없다.")
     @Test
-    void ShouldNotUpdateProductIfNotOwner() {
+    void ShouldNot_UpdateProduct_IfNotOwner() {
         // given
         Owner owner = new Owner(new CellPhoneNumber("010-1234-5678"), new Password("qwer1234!!"));
         ownerRepository.save(owner);
@@ -205,7 +205,7 @@ class ProductServiceTest {
 
     @DisplayName("로그인한 사장님(회원)은 본인이 등록한 상품이 아니면 삭제할 수 없다.")
     @Test
-    void ShouldNotDeleteProductIfNotOwner() {
+    void ShouldNot_DeleteProduct_IfNotOwner() {
         // given
         Owner owner = new Owner(new CellPhoneNumber("010-1234-5678"), new Password("qwer1234!!"));
         ownerRepository.save(owner);

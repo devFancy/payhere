@@ -40,7 +40,7 @@ class JwtTokenProviderTest {
 
     @DisplayName("액세스 토큰을 검증했을 때 만료된 경우라면 예외를 던진다.")
     @Test
-    void throwExceptionWhenTokenIsExpired() {
+    void throwException_WhenTokenIs_Expired() {
         // given
         TokenProvider expriedJwtTokenProvider = new JwtTokenProvider(JWT_SECRET_KEY, 0);
         String expiredToken = expriedJwtTokenProvider.createAccessToken(PAYLOAD);
@@ -52,7 +52,7 @@ class JwtTokenProviderTest {
 
     @DisplayName("토큰을 검증하여 유효하지 않으면 예외를 던진다.")
     @Test
-    void throwExceptionWhenTokenIsInValid() {
+    void throwException_WhenTokenIs_InValid() {
         // given
         String invalidToken = "invalid";
 
