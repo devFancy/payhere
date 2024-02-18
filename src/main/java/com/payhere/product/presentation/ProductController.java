@@ -8,6 +8,8 @@ import com.payhere.product.dto.request.ProductCreateRequest;
 import com.payhere.product.dto.request.ProductUpdateRequest;
 import com.payhere.product.dto.response.ProductDetailResponse;
 import com.payhere.product.dto.response.ProductsResponse;
+import io.swagger.v3.oas.annotations.Parameter;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
@@ -19,6 +21,7 @@ import javax.validation.Valid;
 
 import static org.springframework.data.domain.Sort.Direction.DESC;
 
+@Tag(name = "products", description = "상품 관련 API")
 @RestController
 public class ProductController {
     private final ProductService productService;
@@ -28,7 +31,7 @@ public class ProductController {
     }
 
     @PostMapping("/products/new")
-    public ResponseEntity<ApiResponse<ProductDetailResponse>> save(@AuthenticationPrincipal final LoginOwner loginOwner,
+    public ResponseEntity<ApiResponse<ProductDetailResponse>> save(@Parameter(hidden = true) @AuthenticationPrincipal final LoginOwner loginOwner,
                                                                    @Valid @RequestBody final ProductCreateRequest request) {
         ProductDetailResponse response = productService.save(loginOwner.getId(), request.toServiceRequest());
         ApiResponse<ProductDetailResponse> apiResponse = ApiResponse.created(response);
@@ -36,7 +39,7 @@ public class ProductController {
     }
 
     @GetMapping("/products")
-    public ResponseEntity<ApiResponse<ProductsResponse>> findAll(@AuthenticationPrincipal final LoginOwner loginOwner,
+    public ResponseEntity<ApiResponse<ProductsResponse>> findAll(@Parameter(hidden = true) @AuthenticationPrincipal final LoginOwner loginOwner,
                                                                  @PageableDefault(size = 10, sort = "createdAt", direction = DESC) final Pageable pageable) {
         ProductsResponse response = productService.findAll(loginOwner.getId(), pageable);
         ApiResponse<ProductsResponse> apiResponse = ApiResponse.ok(response);
@@ -44,7 +47,7 @@ public class ProductController {
     }
 
     @GetMapping("/products/{productId}")
-    public ResponseEntity<ApiResponse<ProductDetailResponse>> findProduct(@AuthenticationPrincipal final LoginOwner loginOwner,
+    public ResponseEntity<ApiResponse<ProductDetailResponse>> findProduct(@Parameter(hidden = true) @AuthenticationPrincipal final LoginOwner loginOwner,
                                                                           @PathVariable final long productId) {
         ProductDetailResponse response = productService.find(loginOwner.getId(), productId);
         ApiResponse<ProductDetailResponse> apiResponse = ApiResponse.ok(response);
@@ -52,7 +55,7 @@ public class ProductController {
     }
 
     @GetMapping("/products/search")
-    public ResponseEntity<ApiResponse<ProductsResponse>> searchSlicePosts(@AuthenticationPrincipal final LoginOwner loginOwner,
+    public ResponseEntity<ApiResponse<ProductsResponse>> searchSlicePosts(@Parameter(hidden = true) @AuthenticationPrincipal final LoginOwner loginOwner,
                                                                           @RequestParam @Nullable String query,
                                                                           @PageableDefault(sort = "createdAt", direction = DESC) Pageable pageable) {
         ProductsResponse response = productService.searchSliceWithQuery(loginOwner.getId(), query, pageable);
@@ -61,7 +64,7 @@ public class ProductController {
     }
 
     @PatchMapping("/products/{productId}")
-    public ResponseEntity<ApiResponse<ProductDetailResponse>> update(@AuthenticationPrincipal final LoginOwner loginOwner,
+    public ResponseEntity<ApiResponse<ProductDetailResponse>> update(@Parameter(hidden = true) @AuthenticationPrincipal final LoginOwner loginOwner,
                                                      @PathVariable final Long productId,
                                                      @Valid @RequestBody final ProductUpdateRequest request) {
         productService.update(loginOwner.getId(), productId, request.toServiceRequest());
@@ -70,7 +73,7 @@ public class ProductController {
     }
 
     @DeleteMapping("/products/{productId}")
-    public ResponseEntity<ApiResponse<Void>> delete(@AuthenticationPrincipal final LoginOwner loginOwner,
+    public ResponseEntity<ApiResponse<Void>> delete(@Parameter(hidden = true) @AuthenticationPrincipal final LoginOwner loginOwner,
                                     @PathVariable final Long productId) {
         productService.delete(loginOwner.getId(), productId);
         ApiResponse<Void> apiResponse = ApiResponse.noContent();
