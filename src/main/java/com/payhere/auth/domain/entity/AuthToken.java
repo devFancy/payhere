@@ -7,7 +7,7 @@ import javax.persistence.*;
 
 @Table(name = "auth_tokens")
 @Entity
-public class AccessToken extends BaseEntity {
+public class AuthToken extends BaseEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -20,10 +20,10 @@ public class AccessToken extends BaseEntity {
     @Column(name = "token")
     private String token;
 
-    protected AccessToken() {
+    protected AuthToken() {
     }
 
-    public AccessToken(final Owner owner, final String token) {
+    public AuthToken(final Owner owner, final String token) {
         this.owner = owner;
         this.token = token;
     }

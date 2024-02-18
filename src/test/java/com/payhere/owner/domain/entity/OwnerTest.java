@@ -12,7 +12,7 @@ class OwnerTest {
 
     @DisplayName("회원을 생성한다.")
     @Test
-    void 회원을_생성한다() {
+    void createOwner() {
         // given
         CellPhoneNumber cellPhoneNumber = new CellPhoneNumber("010-1234-5678");
         Password password = new Password("Qwer1234!!");
