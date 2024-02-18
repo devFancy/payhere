@@ -1,15 +1,15 @@
-# 페이히어 백엔드 엔지니어 과제
+# 페이히어 백엔드 엔지니어 과제 (Developed by Jun Yong, Moon)
 
 > 컨벤션 및 협업에 대한 문서는 [wiki](https://github.com/devFancy/payhere/wiki)를 참고해 주시면 감사하겠습니다 😌.
 
 ## 목차
 
 - [기능 요구사항](#기능-요구사항)
-- [패키지 구조](#패키지-구조)
+- [개발 환경](#개발-환경)
 - [빌드 및 실행](#빌드-및-실행하기)
+- [패키지 구조](#패키지-구조)
 - [프로젝트를 통한 기술적 성장](#프로젝트를-통한-기술적-성장)
 - [느낀 점](#느낀-점)
-- [개발 환경](#개발-환경)
 
 ## 기능 요구사항
 
@@ -103,34 +103,35 @@
     }
     ```
 
-## 패키지 구조
+## 개발 환경
 
-이 프로젝트는 **기능별**로 구성된 패키지 구조로 가지고 있습니다.
+- 기본 환경
 
-- `auth`(인증/인가), `owner`(사장님/회원), `product`(상품), 그리고 전역적으로 사용되는 요소를 담당하는 `global`로 나뉩니다.
+    - IDE: IntelliJ IDEA Ultimate Edition
 
-- 각 기능별 채키지 안에는 `application`, `domain`, `dto`, `exception`, `presentation`의 하위 구조로 세분화되어 있습니다.
+    - OS: MacOS (Apple M1 Pro)
 
-<img src="/docs/image/docs-package-structure.png" width="500">
+    - Git
 
-- `presentation`은 **외부와의 상호작용**을 담당하는 부분으로, 외부 요청과 응답 처리에 관련된 클래스들이 이 레이어에 속합니다.
-  외부 의존성이 높으며 변화에 민감한 요소들이 위치합니다.
+- Backend
 
-- `domain`은 핵심 비즈니스 로직과 관련된 **엔티티**, 엔티티와 연관된 클래스들, 그리고 데이터베이스와 연결된 **레포지토리** 클래스들이 이 레이어에 속합니다.
-  이는 프로젝트의 **핵심 도메인**을 정의하며, 데이터의 구조와 관계를 담당합니다.
+    - `Language`| Java 11
 
-- `application`는 주로 **비즈니스 로직을 처리**합니다.
-  이 레이어에는 서비스 클래스들이 위치하며, 사용자의 요청을 실제 동작으로 변환하는 중심적인 역할(**구현 로직**)을 담당하며 재사용성도 **높은 핵심 레이어**입니다.
+    - `Framework` | Spring Boot 2.7.1, Spring MVC 5.3.2
 
-  - 코드가 계속 성장해서 비즈니스 로직이 많아지면, 필요에 따라서 `Businness Layer`, `Implement layer`로 구분할 것입니다.
+    - `ORM` | Spring Data JPA 2.7.1, JPA Hibernate 5.6.1
 
-- `dto`는 계층 간 데이터 전송을 위해 사용되는 객체로, 단순한 데이터 컨테이너 역할을 합니다.
-  주로 서비스 계층 간의 **데이터 교환**에 사용되며, 애플리케이션의 계층 사이에 데이터를 효율적으로 전달합니다.
+    - `Database` | H2 2.1.2, MySQL 5.7
 
-- `exception`은 기능별로 발생할 수 있는 예외 상황들을 관리합니다. 예를 들어, 상품을 찾을 수 없을 때 발생하는 `NotFoundProductException` 과 같은 예외 클래스들이 이 레이어에 정의됩니다.
+    - `Build Tool` | Gradle 7.4.1
 
-- `global`는 프로젝트 전반에 걸쳐 공통적으로 사용되는 요소들이 이 레이어에 속합니다.
-  공통적으로 사용하는 `BaseEntity`나 `dto`, `error`, `config`에 대한 클래스들이 모여있습니다.
+    - `Jwt` | Jwt 0.11.5
+
+    - `Test` | Junit5, Mockito 4.5.1
+
+- Infra
+
+    - `CI/CD` | Docker
 
 ## 빌드 및 실행하기
 
@@ -176,6 +177,35 @@ $ ./gradlew clean build
 
 - 접속(Base) Url: `http://localhost:8080`
 
+## 패키지 구조
+
+이 프로젝트는 **기능별**로 구성된 패키지 구조로 가지고 있습니다.
+
+- `auth`(인증/인가), `owner`(사장님/회원), `product`(상품), 그리고 전역적으로 사용되는 요소를 담당하는 `global`로 나뉩니다.
+
+- 각 기능별 채키지 안에는 `application`, `domain`, `dto`, `exception`, `presentation`의 하위 구조로 세분화되어 있습니다.
+
+<img src="/docs/image/docs-package-structure.png" width="500">
+
+- `presentation`은 **외부와의 상호작용**을 담당하는 부분으로, 외부 요청과 응답 처리에 관련된 클래스들이 이 레이어에 속합니다.
+  외부 의존성이 높으며 변화에 민감한 요소들이 위치합니다.
+
+- `domain`은 핵심 비즈니스 로직과 관련된 **엔티티**, 엔티티와 연관된 클래스들, 그리고 데이터베이스와 연결된 **레포지토리** 클래스들이 이 레이어에 속합니다.
+  이는 프로젝트의 **핵심 도메인**을 정의하며, 데이터의 구조와 관계를 담당합니다.
+
+- `application`는 주로 **비즈니스 로직을 처리**합니다.
+  이 레이어에는 서비스 클래스들이 위치하며, 사용자의 요청을 실제 동작으로 변환하는 중심적인 역할(**구현 로직**)을 담당하며 재사용성도 **높은 핵심 레이어**입니다.
+
+  - 코드가 계속 성장해서 비즈니스 로직이 많아지면, 필요에 따라서 `Businness Layer`, `Implement layer`로 구분할 것입니다.
+
+- `dto`는 계층 간 데이터 전송을 위해 사용되는 객체로, 단순한 데이터 컨테이너 역할을 합니다.
+  주로 서비스 계층 간의 **데이터 교환**에 사용되며, 애플리케이션의 계층 사이에 데이터를 효율적으로 전달합니다.
+
+- `exception`은 기능별로 발생할 수 있는 예외 상황들을 관리합니다. 예를 들어, 상품을 찾을 수 없을 때 발생하는 `NotFoundProductException` 과 같은 예외 클래스들이 이 레이어에 정의됩니다.
+
+- `global`는 프로젝트 전반에 걸쳐 공통적으로 사용되는 요소들이 이 레이어에 속합니다.
+  공통적으로 사용하는 `BaseEntity`나 `dto`, `error`, `config`에 대한 클래스들이 모여있습니다.
+
 ## 프로젝트를 통한 기술적 성장
 
 * 지속 성장 가능한 소프트웨어를 만들기 위해 **`Business Logic` 과 `Layer`** 에 대해 고민하며 개발했습니다.
@@ -205,33 +235,3 @@ $ ./gradlew clean build
 * 그럼에도 불구하고 이번 과제를 통해 새롭게 습득한 지식으로 과제를 즐겁게 진행하였습니다.
 
     이러한 학습 경험은 아쉬움에도 불구하고, 이 과제를 저에게 **가치 있고 의미 있는 도전**으로 만들어 주었습니다.
-
-## 개발 환경
-
-- 기본 환경
-
-    - IDE: IntelliJ IDEA Ultimate Edition
-
-    - OS: MacOS (Apple M1 Pro)
-
-    - Git
-
-- Backend
-
-    - `Language`| Java 11
-
-    - `Framework` | Spring Boot 2.7.1, Spring MVC 5.3.2
-
-    - `ORM` | Spring Data JPA 2.7.1, JPA Hibernate 5.6.1
-
-    - `Database` | H2 2.1.2, MySQL 5.7
-
-    - `Build Tool` | Gradle 7.4.1
-
-    - `Jwt` | Jwt 0.11.5
-
-    - `Test` | Junit5, Mockito 4.5.1
-
-- Infra
-
-    - `CI/CD` | Docker
