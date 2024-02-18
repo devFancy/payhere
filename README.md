@@ -19,7 +19,7 @@
 
 - 각 기능별 채키지 안에는 `application`, `domain`, `dto`, `exception`, `presentation`의 하위 구조로 세분화되어 있습니다.
 
-![](/docs/image/docs-package-structure.png)
+<img src="/docs/image/docs-package-structure.png" width="500">
 
 - `presentation`은 **외부와의 상호작용**을 담당하는 부분으로, 외부 요청과 응답 처리에 관련된 클래스들이 이 레이어에 속합니다.
   외부 의존성이 높으며 변화에 민감한 요소들이 위치합니다.
