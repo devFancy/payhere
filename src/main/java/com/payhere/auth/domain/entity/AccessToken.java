@@ -1,6 +1,6 @@
 package com.payhere.auth.domain.entity;
 
-import com.payhere.common.BaseEntity;
+import com.payhere.global.BaseEntity;
 import com.payhere.owner.domain.entity.Owner;
 
 import javax.persistence.*;

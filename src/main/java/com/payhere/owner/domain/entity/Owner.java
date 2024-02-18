@@ -1,7 +1,7 @@
 package com.payhere.owner.domain.entity;
 
 
-import com.payhere.common.BaseEntity;
+import com.payhere.global.BaseEntity;
 import com.payhere.owner.domain.CellPhoneNumber;
 import com.payhere.owner.domain.Password;
 import lombok.Builder;

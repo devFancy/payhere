@@ -1,4 +1,4 @@
-package com.payhere.common;
+package com.payhere.global;
 
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
