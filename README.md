@@ -133,6 +133,8 @@
 
     - `CI/CD` | Docker
 
+![](/docs/image/docs-payhere-tech-stack.png)
+
 ## 빌드 및 실행하기
 
 ### 터미널 환경
@@ -183,7 +185,7 @@ $ ./gradlew clean build
 
 - `auth`(인증/인가), `owner`(사장님/회원), `product`(상품), 그리고 전역적으로 사용되는 요소를 담당하는 `global`로 나뉩니다.
 
-- 각 기능별 채키지 안에는 `application`, `domain`, `dto`, `exception`, `presentation`의 하위 구조로 세분화되어 있습니다.
+- 각 기능별 패키지 안에는 `application`, `domain`, `dto`, `exception`, `presentation`의 하위 구조로 세분화되어 있습니다.
 
 <img src="/docs/image/docs-package-structure.png" width="500">
 
@@ -222,7 +224,7 @@ $ ./gradlew clean build
 
 * 해당 과제를 진행하면서 백엔드 코드의 일관성을 유지하고 팀 간 협업을 원활하게 하기 위해 `코드 컨벤션`과 `GitHub Flow`를 철저히 준수하며 작업했습니다.
 
-    동료 개발자가 쉽게 이해하고 협업할 수 있도록 Commit Convention부터 Issue와 Pull request 부분을 명확하고 간결하게 작성하려고 노력했습니다.
+    또한 동료 개발자가 쉽게 이해하고 협업할 수 있도록 Commit Convention부터 Issue와 Pull request 부분을 명확하고 간결하게 작성하려고 노력했습니다.
 
     요구 사항에 따라 개발을 순차적으로 진행하면서, 동료 개발자들이 **프로젝트의 진행 상황**을 쉽게 파악할 수 있도록 [Milestones](https://github.com/devFancy/payhere/milestone/1)에 기록했습니다.
 
@@ -235,3 +237,5 @@ $ ./gradlew clean build
 * 그럼에도 불구하고 이번 과제를 통해 새롭게 습득한 지식으로 과제를 즐겁게 진행하였습니다.
 
     이러한 학습 경험은 아쉬움에도 불구하고, 이 과제를 저에게 **가치 있고 의미 있는 도전**으로 만들어 주었습니다.
+
+    감사합니다.
