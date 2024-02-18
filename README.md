@@ -34,62 +34,72 @@
 
 - 예시) 카페 라떼 - 성공한 경우
 
-```json
-{
-    "meta": {
-        "code": 201,
-        "message": "Created"
-    },
-    "data": {
-        "id": 1,
-        "productCategory": "HANDMADE",
-        "price": 3000,
-        "cost": 1000,
-        "name": "카페 라떼",
-        "description": "장인이 직접 제조하는 카페 라떼",
-        "barcode": "9788966 2841213",
-        "expirationDate": "2024-12-31T23:59:00",
-        "productSize": "SMALL"
+- Request: `http://localhost:8080/products/new`
+
+- Response:
+
+    ```json
+    {
+        "meta": {
+            "code": 201,
+            "message": "Created"
+        },
+        "data": {
+            "id": 1,
+            "productCategory": "HANDMADE",
+            "price": 3000,
+            "cost": 1000,
+            "name": "카페 라떼",
+            "description": "장인이 직접 제조하는 카페 라떼",
+            "barcode": "9788966 2841213",
+            "expirationDate": "2024-12-31T23:59:00",
+            "productSize": "SMALL"
+        }
     }
-}
-```
+    ```
 
-- 예시) 카페 라떼 - 실패한 경우 (가격 또는 원가를 음수로 입력한 경우)
+- 예시) 카페 라떼 - 실패한 경우 (가격을 음수로 입력한 경우)
 
-```json
-{
-    "meta": {
-        "code": 400,
-        "message": "상품 가격은 0원 이상이어야 합니다."
-    },
-    "data": null
-}
-```
+- Response:
+
+    ```json
+    {
+        "meta": {
+            "code": 400,
+            "message": "상품 가격은 0원 이상이어야 합니다."
+        },
+        "data": null
+    }
+    ```
 
 #### 상품 이름을 기반으로 검색하는 API(키워드, 초성)
 
 - 예시) 카페 라떼 -> 검색 가능한 키워드: 카페 라떼, 카페, 라떼, ㅋㅍ, ㄹㄸ
 
-```json
-{
-  "meta": {
-    "code": 200,
-    "message": "OK"
-  },
-  "data": {
-    "products": [
-      {
-        "id": 1,
-        "price": 3000,
-        "name": "카페 라떼",
-        "expirationDate": "2024-12-31T23:59:00",
-        "productSize": "SMALL",
-        "createdAt": "2024-02-18T17:29:36.703934"
+- Request : `http://localhost:8080/products/search?query=ㄹㄸ&page=0&size=5`
+
+- Response
+
+    ```json
+    {
+      "meta": {
+        "code": 200,
+        "message": "OK"
+      },
+      "data": {
+        "products": [
+          {
+            "id": 1,
+            "price": 3000,
+            "name": "카페 라떼",
+            "expirationDate": "2024-12-31T23:59:00",
+            "productSize": "SMALL",
+            "createdAt": "2024-02-18T17:29:36.703934"
+          }
+        ]
       }
-    ]
-  }
-}
-```
+    }
+    ```
 
 ## 패키지 구조
 
@@ -124,7 +134,7 @@
 
 ### 터미널 환경
 
-* Git, Java는 설치되어 있다고 가정합니다.
+- Git, Java는 설치되어 있다고 가정합니다.
 
 > 방법1. 터미널 창에서 java -jar 로 실행할 경우
 
@@ -151,7 +161,7 @@ $ ./gradlew clean build
 
 - payhere 패키지 - `build.gradle` 파일 오른쪽 마우스 클릭 - `Link Gradle Project` 클릭합니다.
     - 오류) 다음와 같은 오류가 생길 경우 - `java.lang.IllegalStateException: Module entity with name: payhere should be available`
-    - 해결방안) 최상단에 있는 프로젝트명(Payhere)과 `setting.gralde` 파일의 rootProject.name (Payhere)을 일치시킵니다.
+    - 해결방안) 최상단에 있는 프로젝트명(Payhere)과 `settings.gralde` 파일의 rootProject.name (Payhere)을 일치시킵니다.
 
 - payhere 패키지 - `build.gradle` 파일 클릭 후 우측 상단에 `Gradle` - `Reload All Gradle Projects` 클릭합니다. -> `BUILD SUCCESSFUL` 이라는
   결과가 뜨게 됩니다.
@@ -174,15 +184,27 @@ $ ./gradlew clean build
 
 * 상품 이름을 기반으로 검색할 때 초성 검색을 지원할 수 있는 방법에 대해 알게 됐습니다.
 
-* 비밀번호를 안전하게 보관하기 위해 해싱 처리하는 방법에 대해 알게 됐습니다.
+* 비밀번호를 안전하게 보관하기 위해 해싱으로 처리하는 방법에 대해 알게 됐습니다.
 
 * Docker를 이용하여 서버를 구축하는 방법에 대해 알게 됐습니다.
 
 ## 느낀 점(아쉬운 점)
 
-* 직무간의 협업을 위해 백엔드 코드 컨벤션과 github flow를 기반으로 일관성있게 코드를 작성하는 경험을 했습니다.
+* 해당 과제를 진행하면서 백엔드 코드의 일관성을 유지하고 팀 간 협업을 원활하게 하기 위해 코드 컨벤션과 GitHub Flow를 철저히 준수하며 작업했습니다.
 
-* 제가 구현한 프로덕션 코드에 대한 안정감과 신뢰성을 쌓기 위해 지속적으로 테스트 코드를 작성했지만, 전부 커버는 하지 못했습니다.
+    동료 개발자가 쉽게 이해하고 협업할 수 있도록 Commit Convention부터 Issue와 Pull request 부분을 명확하고 간결하게 작성하려고 노력했습니다.
+
+    요구 사항에 따라 개발을 순차적으로 진행하면서, 동료 개발자들이 프로젝트의 진행 상황을 쉽게 파악할 수 있도록 [Milestones](https://github.com/devFancy/payhere/milestone/1)에 기록했습니다.
+
+    (협업을 위한 문서는 [wiki](https://github.com/devFancy/payhere/wiki)를 통해 확인하실 수 있습니다)
+
+* 과제를 진행하면서 가장 아쉬웠던 점은 프로덕션 코드의 안정성과 신뢰성을 더욱 강화하기 위해 테스트 코드 작성에 많은 시간을 할애했음에도 불구하고, 모든 코드를 완벽하게 커버하지 못했다는 것입니다.
+
+    이 부분에 대해서는 만약 시간이 더 있다면, Jacoco를 사용하여 코드 커버리지를 최소 80%까지 끌어올려 프로덕션 코드의 안정성과 신뢰성을 보다 확실하게 보장하고자 했습니다.
+
+* 그럼에도 불구하고 이번 과제를 통해 새롭게 습득한 지식으로 과제를 즐겁게 진행하였습니다.
+
+    이러한 학습 경험은 아쉬움에도 불구하고, 이 과제를 저에게 더욱 가치 있고 의미 있는 도전으로 만들어 주었습니다."
 
 ## 개발 환경
 
@@ -202,7 +224,7 @@ $ ./gradlew clean build
 
     - `ORM` | Spring Data JPA 2.7.1, JPA Hibernate 5.6.1
 
-    - `Database` | H2 2.1.2 / MySQL 5.7
+    - `Database` | H2 2.1.2, MySQL 5.7
 
     - `Build Tool` | Gradle 7.4.1
 
